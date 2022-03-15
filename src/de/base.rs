@@ -63,9 +63,6 @@ pub trait Visitor {
     fn string(&mut self, _x: &str) -> Result<()> {
         Err(Error)
     }
-    fn null(&mut self) -> Result<()> {
-        Err(Error)
-    }
     fn map(&mut self) -> Result<Box<dyn Map>> {
         Err(Error)
     }

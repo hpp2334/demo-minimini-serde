@@ -30,12 +30,11 @@ fn derive_struct(input: &DeriveInput, fields: &FieldsNamed) -> syn::Result<Token
 
     Ok(quote! {
         const #dummy: () = {
-            demo_minimini_serde::make_place!(_Place);
-            struct StructMap<'a> {
+            struct __Map<'a> {
                 data: &'a #ident,
                 cur: usize
             }
-            impl<'a> demo_minimini_serde::ser::Map for StructMap<'a> {
+            impl<'a> demo_minimini_serde::ser::Map for __Map<'a> {
                 fn next(&mut self) -> demo_minimini_serde::Option<(String, &dyn demo_minimini_serde::Serialize)> {
                     match self.cur {
                         #(#indexes => {
@@ -51,7 +50,7 @@ fn derive_struct(input: &DeriveInput, fields: &FieldsNamed) -> syn::Result<Token
 
             impl demo_minimini_serde::Serialize for #ident {
                 fn begin(&self) -> demo_minimini_serde::Result<demo_minimini_serde::ser::Fragment> {
-                    let map = StructMap {
+                    let map = __Map {
                         data: self,
                         cur: 0,
                     };
