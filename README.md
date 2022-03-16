@@ -8,3 +8,5 @@ Demo 在原本的基础上做出以下简化：
 - 只支持 `bool`, `i32`, `String` 与 struct；
 - 针对 Token，而非字符串；
 - 不考虑性能、合法性校验等；
+
+[从库学 Rust - miniminiserde](http://blog.hpp2334.com/learn-rust-by-lib/miniminiserde/)
