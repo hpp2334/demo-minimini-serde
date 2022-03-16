@@ -1,6 +1,6 @@
 # \[Demo\] minimini-serde
 
-本 Demo 是一个简化版本的 [miniserde](https://github.com/dtolnay/miniserde)，主要用于学习 miniserde 的序列化与反序列 API。
+本 Demo 是一个简化版本的 [miniserde](https://github.com/dtolnay/miniserde)，主要用于学习 miniserde 的序列化与反序列 API 可以如何实现。
 
 Demo 在原本的基础上做出以下简化：
 
