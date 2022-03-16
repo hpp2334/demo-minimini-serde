@@ -13,3 +13,10 @@ fn test_i32() {
     let r = from_tokens::<i32>(&tokens).unwrap();
     assert_eq!(r, 1324457);
 }
+
+#[test]
+fn test_string() {
+    let tokens = vec![Token::String("abdd#@#4!".to_owned())];
+    let r = from_tokens::<String>(&tokens).unwrap();
+    assert_eq!(&r, "abdd#@#4!");
+}
