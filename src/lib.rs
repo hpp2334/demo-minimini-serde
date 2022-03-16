@@ -15,9 +15,3 @@ pub use std::option::Option;
 pub use std::rc::Rc;
 
 pub use minimini_serde_derive::*;
-
-#[cfg(test)]
-mod tests {
-    use crate::{from_tokens, Token};
-
-}
