@@ -13,12 +13,7 @@ impl<T> PlaceStore<T> {
     }
     pub fn try_unwrap(mut self) -> Result<T> {
         let out = unsafe { Rc::get_mut_unchecked(&mut self.out) };
-        let v = out.take();
-
-        if let Some(v) = v {
-            return Ok(v);
-        }
-        Err(Error)
+        out.take().ok_or(Error)
     }
     pub fn clone(&self) -> Self {
         Self {
@@ -39,14 +34,6 @@ macro_rules! make_place {
         pub struct $name<T> {
             pub out: PlaceStore<T>,
         }
-
-        impl<T> std::default::Default for $name<T> {
-            fn default() -> Self {
-                Self {
-                    out: std::default::Default::default(),
-                }
-            }
-        }
     };
 }
 
@@ -55,16 +42,16 @@ make_place!(Place);
 // Default implement for Visitor
 pub trait Visitor {
     fn boolean(&mut self, _x: bool) -> Result<()> {
-        Err(Error)
+        unimplemented!()
     }
     fn i32(&mut self, _x: i32) -> Result<()> {
-        Err(Error)
+        unimplemented!()
     }
     fn string(&mut self, _x: &str) -> Result<()> {
-        Err(Error)
+        unimplemented!()
     }
     fn map(&mut self) -> Result<Box<dyn Map>> {
-        Err(Error)
+        unimplemented!()
     }
 }
 

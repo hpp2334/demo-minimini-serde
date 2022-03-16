@@ -32,11 +32,11 @@ fn derive_struct(input: &DeriveInput, fields: &FieldsNamed) -> syn::Result<Token
         const #dummy: () = {
 
             demo_minimini_serde::make_place!(_Place);
-            struct StructMap {
+            struct __Map {
                 #(#field_ident_list: demo_minimini_serde::PlaceStore<#field_ty_list>,)*
                 __out: demo_minimini_serde::PlaceStore<#ident>
             }
-            impl StructMap {
+            impl __Map {
                 pub fn new(out: demo_minimini_serde::PlaceStore<#ident>) -> Self {
                     Self {
                         #(#field_ident_list: std::default::Default::default(),)*
@@ -44,7 +44,7 @@ fn derive_struct(input: &DeriveInput, fields: &FieldsNamed) -> syn::Result<Token
                     }
                 }
             }
-            impl demo_minimini_serde::de::Map for StructMap {
+            impl demo_minimini_serde::de::Map for __Map {
                 fn key(&mut self, key: &str) -> demo_minimini_serde::Result<demo_minimini_serde::Box<dyn demo_minimini_serde::Visitor>> {
                     match key {
                         #(#field_name_list => {
@@ -72,7 +72,7 @@ fn derive_struct(input: &DeriveInput, fields: &FieldsNamed) -> syn::Result<Token
                 fn begin(out: demo_minimini_serde::PlaceStore<Self>) -> Box<dyn demo_minimini_serde::Visitor> {
                     impl demo_minimini_serde::Visitor for _Place<#ident> {
                         fn map(&mut self) -> demo_minimini_serde::Result<demo_minimini_serde::Box<dyn demo_minimini_serde::de::Map>> {
-                            Ok(demo_minimini_serde::Box::new(StructMap::new(self.out.clone())))
+                            Ok(demo_minimini_serde::Box::new(__Map::new(self.out.clone())))
                         }
                     }
 

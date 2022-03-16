@@ -49,7 +49,7 @@ impl<'a> Deserializer<'a> {
     }
 }
 
-pub fn from_tokens<'a, T: Deserialize>(tokens: &'a Vec<Token>) -> Result<T> {
+pub fn from_tokens<T: Deserialize>(tokens: &Vec<Token>) -> Result<T> {
     let out: PlaceStore<T> = Default::default();
     let mut de = Deserializer::new(tokens);
 
@@ -61,7 +61,7 @@ pub fn from_tokens<'a, T: Deserialize>(tokens: &'a Vec<Token>) -> Result<T> {
     Ok(out)
 }
 
-fn from_tokens_impl<'a>(de: &mut Deserializer, mut visitor: Box<dyn Visitor>) -> Result<()> {
+fn from_tokens_impl(de: &mut Deserializer, mut visitor: Box<dyn Visitor>) -> Result<()> {
     match de.event()? {
         Event::Primitive(token) => match token {
             Token::I32(x) => {
@@ -71,7 +71,7 @@ fn from_tokens_impl<'a>(de: &mut Deserializer, mut visitor: Box<dyn Visitor>) ->
                 visitor.boolean(x)?;
             }
             Token::String(x) => {
-                visitor.string(x.as_str())?;
+                visitor.string(&x)?;
             }
             _ => {
                 return Err(Error);
@@ -88,7 +88,7 @@ fn from_tokens_impl<'a>(de: &mut Deserializer, mut visitor: Box<dyn Visitor>) ->
                 }?;
                 de.parse(); // :
 
-                let visitor = map.key(key.as_str())?;
+                let visitor = map.key(&key)?;
                 from_tokens_impl(de, visitor)?;
                 if let Token::Comma = de.peek() {
                     de.parse(); // ,
